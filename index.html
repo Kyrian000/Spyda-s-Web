@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spyda’s web · BIM specialist, Revit</title>
+<script>if(!matchMedia('(prefers-reduced-motion:reduce)').matches){document.documentElement.classList.add('hold','hold-logo')}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Css files -->
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+</style>
+</head>
+<body>
+<div class="veil" id="veil"></div>
+<div class="mark" id="mark" aria-hidden="true"><span class="mark-t">SPYDA’S WEB<i class="dot"></i></span></div>
+<div class="bg" aria-hidden="true"></div>
+<svg class="geo" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" aria-hidden="true">
+  <path d="M0 300L300 0M0 400L400 0M0 500L500 0" opacity=".6"/>
+  <g class="spin">
+    <circle cx="860" cy="140" r="110"/><circle cx="860" cy="140" r="190"/><circle cx="860" cy="140" r="280" stroke-dasharray="2 10"/>
+    <path d="M860 -150V430M570 140H1150"/>
+  </g>
+  <g class="spin r">
+    <rect x="40" y="740" width="200" height="200" transform="rotate(45 140 840)"/>
+    <rect x="80" y="780" width="120" height="120" transform="rotate(45 140 840)"/>
+    <rect x="0" y="700" width="280" height="280" stroke-dasharray="2 10" transform="rotate(45 140 840)"/>
+  </g>
+</svg>
+
+<header id="site-header">
+  <div class="wrap">
+    <a class="logo" id="logo" href="#top">SPYDA’S WEB<i class="dot"></i></a>
+    <nav aria-label="Main">
+      <a class="ul" href="#work">Work</a>
+      <a class="ul" href="#skills">Skills</a>
+      <a class="ul" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <h1 aria-label="Models that get built the way they were drawn.">
+        <span aria-hidden="true"><i style="--i:0">Models that get</i></span>
+        <span aria-hidden="true"><i style="--i:1">built the way</i></span>
+        <span aria-hidden="true"><i style="--i:2">they were drawn.</i></span>
+      </h1>
+      <p class="intro">I’m Kyrian, a BIM specialist working in Revit. I build coordinated models, documentation sets and families for architects and contractors.</p>
+      <a class="cta" href="#contact">Start a project</a>
+
+      <div class="plan" aria-hidden="true">
+        <svg viewBox="0 0 800 400" fill="none">
+          <!-- levels -->
+          <path class="d g" pathLength="1" style="--d:.1s" d="M60 350H740"/>
+          <path class="d g" pathLength="1" style="--d:.2s" d="M60 260H740"/>
+          <path class="d g" pathLength="1" style="--d:.3s" d="M60 170H740"/>
+          <path class="d g" pathLength="1" style="--d:.4s" d="M60 80H740"/>
+          <!-- grids -->
+          <path class="d a" pathLength="1" style="--d:.5s" d="M240 38V380"/>
+          <path class="d a" pathLength="1" style="--d:.6s" d="M400 38V380"/>
+          <path class="d a" pathLength="1" style="--d:.7s" d="M560 38V380"/>
+          <circle class="d a" pathLength="1" style="--d:.9s" cx="240" cy="24" r="14"/>
+          <circle class="d a" pathLength="1" style="--d:1s" cx="400" cy="24" r="14"/>
+          <circle class="d a" pathLength="1" style="--d:1.1s" cx="560" cy="24" r="14"/>
+          <!-- building -->
+          <path class="d" pathLength="1" style="--d:.8s" d="M240 350V80H560V350"/>
+          <path class="d" pathLength="1" style="--d:1.2s" d="M220 80H580"/>
+          <path class="d" pathLength="1" style="--d:1.3s" d="M240 260H560M240 170H560M400 80V350"/>
+          <!-- openings -->
+          <path class="d" pathLength="1" style="--d:1.5s" d="M270 110h100v40H270zM430 110h100v40H430z"/>
+          <path class="d" pathLength="1" style="--d:1.6s" d="M270 200h100v40H270zM430 200h100v40H430z"/>
+          <path class="d" pathLength="1" style="--d:1.7s" d="M270 290h100v60M430 290h100v60"/>
+          <path class="d" pathLength="1" style="--d:1.9s" d="M60 350H740"/>
+          <g text-anchor="middle">
+            <text x="240" y="28">A</text><text x="400" y="28">B</text><text x="560" y="28">C</text>
+          </g>
+          <text x="745" y="354">Level 0</text>
+          <text x="745" y="264">Level 1</text>
+          <text x="745" y="174">Level 2</text>
+          <text x="745" y="84">Roof</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="head"><h2>Selected work</h2><span></span></div>
+      <ul class="work">
+        <li>
+          <button aria-expanded="false" aria-controls="p1" id="b1">Boundary fence documentation<span class="plus"></span></button>
+          <div class="panel" id="p1" role="region" aria-labelledby="b1"><div>
+            <p>Parametric fence and gate families driving plans, elevations and quantity schedules for a full property perimeter.</p>
+            <small>Revit, families, sheets</small>
+          </div></div>
+        </li>
+        <li>
+          <button aria-expanded="false" aria-controls="p2" id="b2">Building wiring estimate<span class="plus"></span></button>
+          <div class="panel" id="p2" role="region" aria-labelledby="b2"><div>
+            <p>Electrical fixtures and circuits modelled in Revit, with schedules that feed straight into material take-offs and costing.</p>
+            <small>Revit MEP, schedules</small>
+          </div></div>
+        </li>
+        <li>
+          <button aria-expanded="false" aria-controls="p3" id="b3">Architectural visualisation<span class="plus"></span></button>
+          <div class="panel" id="p3" role="region" aria-labelledby="b3"><div>
+            <p>Revit models taken into rendering with consistent materials and lighting, so clients see the design as it will be built.</p>
+            <small>Revit, 3D rendering</small>
+          </div></div>
+        </li>
+        <li>
+          <button aria-expanded="false" aria-controls="p4" id="b4">Custom family library<span class="plus"></span></button>
+          <div class="panel" id="p4" role="region" aria-labelledby="b4"><div>
+            <p>Lightweight, reusable families with clean parameters and type catalogs, built to keep project files fast.</p>
+            <small>Revit families, standards</small>
+          </div></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="head"><h2>What I do</h2><span></span></div>
+      <ul class="skills">
+        <li>Revit modelling</li>
+        <li>Parametric families</li>
+        <li>Documentation and sheets</li>
+        <li>Schedules and quantities</li>
+        <li>Model coordination</li>
+        <li>Rendering and visualisation</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Have a idea that needs realization?</h2>
+      <a class="mail ul" href="mailto:hello@yourname.com">hello@yourname.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Spyda’s web</span><a class="ul" href="#top">Back to top</a></div>
+</footer>
+
+<script>
+document.querySelectorAll('.work button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var li = btn.parentElement;
+    var open = li.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+    if(open){
+      document.querySelectorAll('.work li.open').forEach(function(o){
+        if(o!==li){ o.classList.remove('open'); o.querySelector('button').setAttribute('aria-expanded','false'); }
+      });
+    }
+  });
+});
+
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('hold')) return;
+  var veil=document.getElementById('veil'), wrap=document.getElementById('mark'), mark=wrap.firstElementChild, logo=document.getElementById('logo'), done=false;
+  function finish(){ if(done) return; done=true; root.classList.remove('hold','hold-logo'); veil.remove(); wrap.remove(); }
+  setTimeout(finish,5000);
+  var fonts=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();
+  Promise.race([fonts,new Promise(function(r){setTimeout(r,1200)})]).then(function(){
+    var ease='cubic-bezier(.76,0,.2,1)';
+    var appear=mark.animate([{opacity:0,transform:'scale(.9)'},{opacity:1,transform:'scale(1)'}],{duration:800,easing:'cubic-bezier(.22,.8,.24,1)',fill:'forwards'});
+    appear.finished.then(function(){return new Promise(function(r){setTimeout(r,350)})}).then(function(){
+      var m=mark.getBoundingClientRect(), l=logo.getBoundingClientRect();
+      var s=l.width/m.width;
+      var dx=(l.left+l.width/2)-(m.left+m.width/2), dy=(l.top+l.height/2)-(m.top+m.height/2);
+      var o={duration:950,easing:ease,fill:'forwards'};
+      var fly=mark.animate([{transform:'translate(0,0) scale(1)',color:'#E7EBEA'},{transform:'translate('+dx+'px,'+dy+'px) scale('+s+')',color:getComputedStyle(logo).color}],o);
+      mark.querySelector('.dot').animate([{backgroundColor:'#6FB6CF'},{backgroundColor:getComputedStyle(logo.querySelector('.dot')).backgroundColor}],o);
+      veil.animate([{clipPath:'inset(0 0 0 0)'},{clipPath:'inset(0 0 100% 0)'}],{duration:800,delay:150,easing:ease,fill:'forwards'});
+      setTimeout(function(){root.classList.remove('hold')},450);
+      return fly.finished;
+    }).then(finish).catch(finish);
+  }).catch(finish);
+})();
+
+const header = document.getElementById('site-header');
+
+const onScroll = () => {
+  header.classList.toggle('scrolled', window.scrollY > 20);
+};
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll(); // run once in case the page loads already scrolled
+
+</script>
+</body>
+</html>

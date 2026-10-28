@@ -2,7 +2,7 @@
    Pages with an empty src show a placeholder drawing sheet. First page is the cover. */
 window.PROJECTS=[
   {id:'fence',title:'Nassuba Gym Complex',tag:'Int Design, Space planning',pages:[
-    {t:'Cover',src:''},{t:'Site plan',src:''},{t:'Fence elevations',src:''},{t:'Gate detail',src:''},{t:'Post schedule',src:''},{t:'Sections',src:''},{t:'Sections',src:''},
+    {t:'Cover',src:''},{t:'Basement gym plan',src:'./Images/Gymhouse/BFP.jpg'},{t:'Ground Floor Plan',src:'./Images/Gymhouse/GFP.jpg'},{t:'First Floor Plan',src:'./Images/Gymhouse/FFP.jpg'},{t:'Second Floor Plan',src:'./Images/Gymhouse/SFP.jpg'},{t:'Third Floor Plan',src:'./Images/Gymhouse/TFP.jpg'},{t:'Sections',src:''},
     {
         t: '3D Models',
         src: '',

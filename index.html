@@ -15,6 +15,10 @@
 </style>
 </head>
 <body>
+
+   <!-- <div id="curtain"></div> -->
+
+
 <div class="veil" id="veil"></div>
 <div class="mark" id="mark" aria-hidden="true"><span class="mark-t">SPYDA’S WEB<i class="dot"></i></span></div>
 <div class="bg" aria-hidden="true"></div>
@@ -50,7 +54,7 @@
         <span aria-hidden="true"><i style="--i:1">built the way</i></span>
         <span aria-hidden="true"><i style="--i:2">they were drawn.</i></span>
       </h1>
-      <p class="intro">I’m Kyrian, a Mechatronics Engineer with an inclination towards BIM and Interior modelling in Revit and SketchUp. I build coordinated models, documentation sets and families for architects and contractors.</p>
+      <p class="intro">I’m Kyrian, a mechatronics engineer with an inclination toward BIM and interior modeling in Revit and SketchUp. I build coordinated models, documentation sets and families for architects and contractors.</p>
       <a class="cta" href="gallery.html">View a project</a>
 
       <div class="plan" aria-hidden="true">
@@ -90,7 +94,7 @@
 
   <section id="work">
     <div class="wrap">
-      <div class="head"><h2>Specialties</h2><span></span></div>
+      <div class="head"><h2>Skills</h2><span></span></div>
       <ul class="work">
         <li>
           <button aria-expanded="false" aria-controls="p3" id="b3">Architectural visualisation<span class="plus"></span></button>
@@ -124,7 +128,7 @@
     </div>
   </section>
 
-  <section id="skills">
+  <!-- <section id="skills">
     <div class="wrap">
       <div class="head"><h2>What I do</h2><span></span></div>
       <ul class="skills">
@@ -136,7 +140,7 @@
         <li>Rendering and visualisation</li>
       </ul>
     </div>
-  </section>
+  </section> -->
 
   <section id="contact" class="contact">
     <div class="wrap">
@@ -196,6 +200,27 @@ const onScroll = () => {
 
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll(); // run once in case the page loads already scrolled
+
+
+
+// curtain 
+ /* Swipe UP on load — reveal the page */
+    window.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        document.getElementById('curtain').classList.add('up');
+      });
+    });
+ 
+    /* Call this for every link/button instead of href */
+    function navigateTo(url) {
+      const curtain = document.getElementById('curtain');
+      curtain.classList.remove('up');
+      curtain.classList.add('down');          // swipe DOWN to cover page
+ 
+      setTimeout(() => {
+        window.location.href = url;           // go to new page (swipe UP fires on load there)
+      }, 800);                                // wait for animation to finish
+    }
 
 </script>
 </body>

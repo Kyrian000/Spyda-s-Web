@@ -39,7 +39,7 @@ window.pageEl = function(proj, i) {
 
   // 2. Cover Page
   if (i === 0) {
-    d.innerHTML = '<svg viewBox="0 0 300 400" fill="none" stroke="#f2f5f7" stroke-width="1" opacity=".45"><circle cx="230" cy="110" r="50"/><circle cx="230" cy="110" r="80" stroke-dasharray="2 8"/><path d="M230 0V220M120 110H300M0 330L120 210M0 370L160 210"/></svg>' +
+    d.innerHTML = '<svg viewBox="0 0 300 400" fill="none" stroke="#090a0a" stroke-width="1" opacity=".45"><circle cx="230" cy="110" r="50"/><circle cx="230" cy="110" r="80" stroke-dasharray="2 8"/><path d="M230 0V220M120 110H300M0 330L120 210M0 370L160 210"/></svg>' +
       '<div class="pc"><span>' + proj.tag + '</span><b>' + proj.title + '</b><i class="dot"></i></div>';
     return d;
   }
@@ -78,3 +78,24 @@ window.pageEl = function(proj, i) {
     '<text x="270" y="365" font-size="11" fill="#6A7174" stroke="none" text-anchor="end" font-family="Hanken Grotesk,sans-serif">A-0'+i+'</text></svg>';
   return d;
 };
+
+
+
+// curtain 
+ /* Swipe UP on load — reveal the page */
+    window.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        document.getElementById('curtain').classList.add('up');
+      });
+    });
+ 
+    /* Call this for every link/button instead of href */
+    function navigateTo(url) {
+      const curtain = document.getElementById('curtain');
+      curtain.classList.remove('up');
+      curtain.classList.add('down');          // swipe DOWN to cover page
+ 
+      setTimeout(() => {
+        window.location.href = url;           // go to new page (swipe UP fires on load there)
+      }, 800);                                // wait for animation to finish
+    }

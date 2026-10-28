@@ -11,6 +11,10 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+ <div id="curtain"></div>
+
+
 <div class="bg" aria-hidden="true"></div>
 <svg class="geo" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" aria-hidden="true">
   <path d="M0 300L300 0M0 400L400 0M0 500L500 0" opacity=".6"/>
@@ -64,6 +68,7 @@ const onScroll = () => {
 
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll(); // run once in case the page loads already scrolled
+
 
 </script>
 </body>

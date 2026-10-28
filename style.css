@@ -35,6 +35,27 @@ header.window-scroll{
     }
 }
 
+/* Curtain loader */
+/* ── CURTAIN ── */
+    #curtain {
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 3rem;
+      position: fixed;
+      inset: 0;
+      background: rgb(179, 167, 167);
+      z-index: 9999;
+      pointer-events: none;
+      transform: translateY(0%);
+      transition: transform 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+      /* background-image: url('Images/White/logo.png'); */
+      background-position: center;
+      background-size: 8rem auto;
+      background-repeat: no-repeat;
+      }
+    #curtain.up   { transform: translateY(-100%); }
+    #curtain.down { transform: translateY(0%); }
+
+
 :root[data-theme="dark"]{--bg:#121517;--ink:#E7EBEA;--muted:#8B9496;--line:#2B3235;--accent:#6FB6CF;--grid:rgba(231,235,234,.05)}
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reader · Spyda’s web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gallery.css">
+<style>
+body{height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;overflow:hidden}
+button{all:unset;box-sizing:border-box;cursor:pointer}
+.bar{display:flex;align-items:center;gap:16px;padding:18px clamp(16px,4vw,40px)}
+.bar .title{flex:1;text-align:center;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.back{color:var(--muted);flex:none}
+.right{display:flex;align-items:center;gap:14px;flex:none;color:var(--muted);font-variant-numeric:tabular-nums}
+.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,28px);padding:0 clamp(8px,2vw,24px);touch-action:pan-y}
+.nav{flex:none;width:46px;height:46px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:1.5rem;line-height:1;transition:background .3s,color .3s,opacity .3s}
+.nav:hover{background:var(--ink);color:var(--bg)}
+.nav[disabled]{opacity:.2;pointer-events:none}
+.book{position:relative;display:grid;grid-template-columns:1fr 1fr;aspect-ratio:3/2;width:min(calc(100vw - 150px),calc((100dvh - 210px)*1.5));perspective:2600px;transition:transform .8s var(--ease);cursor:pointer}
+.book.solo-r{transform:translateX(-25%)}
+.book.solo-l{transform:translateX(25%)}
+.book.single{grid-template-columns:1fr;aspect-ratio:3/4;width:min(calc(100vw - 32px),calc((100dvh - 210px)*.75))}
+.book.single .slot.l{display:none}
+.slot{position:relative;min-width:0}
+.slot .page:not(.blank){box-shadow:0 30px 50px -22px rgba(0,0,0,.6)}
+.slot.l .page:not(.blank){box-shadow:inset -22px 0 26px -22px rgba(0,0,0,.3),0 30px 50px -22px rgba(0,0,0,.6)}
+.slot.r .page:not(.blank){box-shadow:inset 22px 0 26px -22px rgba(0,0,0,.3),0 30px 50px -22px rgba(0,0,0,.6)}
+.leaf{position:absolute;top:0;width:50%;height:100%;z-index:5;transform-style:preserve-3d;transition:transform .95s cubic-bezier(.6,.05,.25,1)}
+.leaf.nx{right:0;transform-origin:left center}
+.leaf.pv{left:0;transform-origin:right center}
+.face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.face.bk{transform:rotateY(180deg)}
+.thumbs{display:flex;gap:10px;overflow-x:auto;padding:18px clamp(16px,4vw,40px) 20px;justify-content:safe center;scrollbar-width:none}
+.thumbs::-webkit-scrollbar{display:none}
+.th{flex:none;width:42px;aspect-ratio:3/4;opacity:.4;transition:opacity .3s,transform .4s var(--ease)}
+.th:hover{opacity:.8}
+.th.on{opacity:1;transform:translateY(-4px)}
+.th .pc{display:none}
+@media(max-width:759px){.nav{display:none}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+<svg class="geo" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" aria-hidden="true">
+  <path d="M0 300L300 0M0 400L400 0M0 500L500 0" opacity=".6"/>
+  <g class="spin"><circle cx="860" cy="140" r="110"/><circle cx="860" cy="140" r="190"/><circle cx="860" cy="140" r="280" stroke-dasharray="2 10"/><path d="M860 -150V430M570 140H1150"/></g>
+  <g class="spin r"><rect x="40" y="740" width="200" height="200" transform="rotate(45 140 840)"/><rect x="80" y="780" width="120" height="120" transform="rotate(45 140 840)"/></g>
+</svg>
+
+<header class="bar">
+  <a class="back ul" href="gallery.html">← Gallery</a>
+  <span class="title" id="title"></span>
+  <span class="right"><span id="count"></span><button id="fs" class="ul" aria-label="Toggle fullscreen">Fullscreen</button></span>
+</header>
+
+<main class="stage" id="stage">
+  <button class="nav" id="prev" aria-label="Previous page">‹</button>
+  <div class="book" id="book" aria-live="polite"><div class="slot l" id="L"></div><div class="slot r" id="R"></div></div>
+  <button class="nav" id="next" aria-label="Next page">›</button>
+</main>
+<div class="thumbs" id="thumbs"></div>
+
+<script src="gallery.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var id=new URLSearchParams(location.search).get('p');
+  var proj=PROJECTS.filter(function(x){return x.id===id})[0]||PROJECTS[0];
+  var n=proj.pages.length, book=$('book'), L=$('L'), R=$('R'), spreads=[], single=false, cur=0, busy=false;
+  document.title=proj.title+' · Spyda’s web';
+  $('title').textContent=proj.title;
+
+  function pg(i){return pageEl(proj,i)}
+  function build(){
+    single=innerWidth<760; spreads=[];
+    if(single){for(var i=0;i<n;i++)spreads.push([i])}
+    else{spreads.push([null,0]);for(var j=1;j<n;j+=2)spreads.push([j,j+1<n?j+1:null])}
+    book.classList.toggle('single',single);
+  }
+  function first(s){var sp=spreads[s];return sp[0]!=null?sp[0]:sp[1]}
+  function spreadOf(p){for(var s=0;s<spreads.length;s++)if(spreads[s].indexOf(p)>-1)return s;return 0}
+  function paint(s){
+    var sp=spreads[s];
+    L.replaceChildren(pg(single?null:sp[0]));
+    R.replaceChildren(pg(single?sp[0]:sp[1]));
+  }
+  function ui(s){
+    var sp=spreads[s], vis=sp.filter(function(x){return x!=null}).map(function(x){return x+1});
+    $('count').textContent=vis.join('–')+' / '+n;
+    book.classList.toggle('solo-r',!single&&sp[0]==null);
+    book.classList.toggle('solo-l',!single&&sp[1]==null);
+    $('prev').disabled=s===0; $('next').disabled=s===spreads.length-1;
+    [].forEach.call($('thumbs').children,function(t,i){t.classList.toggle('on',vis.indexOf(i+1)>-1)});
+  }
+  function go(s2){
+    if(busy||s2<0||s2>=spreads.length||s2===cur)return;
+    var dir=s2>cur?1:-1, a=spreads[cur], b=spreads[s2];
+    busy=true;
+    if(Math.abs(s2-cur)>1){
+      book.animate([{opacity:1},{opacity:0}],{duration:160,fill:'forwards'}).finished.then(function(){
+        paint(s2);cur=s2;ui(s2);
+        return book.animate([{opacity:0},{opacity:1}],{duration:300}).finished;
+      }).then(function(){book.getAnimations().forEach(function(x){x.cancel()});busy=false});
+      return;
+    }
+    if(single){
+      paint(s2);cur=s2;ui(s2);
+      R.firstChild.animate([{opacity:0,transform:'translateX('+(dir*36)+'px)'},{opacity:1,transform:'none'}],{duration:420,easing:'cubic-bezier(.22,.8,.24,1)'}).finished.then(function(){busy=false});
+      return;
+    }
+    var leaf=document.createElement('div');
+    leaf.className='leaf '+(dir>0?'nx':'pv');
+    leaf.innerHTML='<div class="face"></div><div class="face bk"></div>';
+    leaf.children[0].appendChild(pg(dir>0?a[1]:a[0]));
+    leaf.children[1].appendChild(pg(dir>0?b[0]:b[1]));
+    if(dir>0)R.replaceChildren(pg(b[1]));else L.replaceChildren(pg(b[0]));
+    book.appendChild(leaf);
+    leaf.getBoundingClientRect();
+    leaf.style.transform='rotateY('+(dir>0?-180:180)+'deg)';
+    cur=s2;ui(s2);
+    setTimeout(function(){
+      if(dir>0)L.replaceChildren(pg(b[0]));else R.replaceChildren(pg(b[1]));
+      leaf.remove();busy=false;
+    },980);
+  }
+
+  for(var i=0;i<n;i++){(function(i){
+    var t=document.createElement('button');t.className='th';t.setAttribute('aria-label','Go to page '+(i+1));
+    t.appendChild(pg(i));t.onclick=function(){go(spreadOf(i))};$('thumbs').appendChild(t);
+  })(i)}
+
+  build();paint(0);ui(0);
+  $('prev').onclick=function(){go(cur-1)};
+  $('next').onclick=function(){go(cur+1)};
+  addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight')go(cur+1);else if(e.key==='ArrowLeft')go(cur-1);
+  });
+  var x0=null;
+  book.addEventListener('pointerdown',function(e){x0=e.clientX});
+  book.addEventListener('pointerup',function(e){
+    if(x0==null)return;
+    var dx=e.clientX-x0;x0=null;
+    if(dx<-50)go(cur+1);else if(dx>50)go(cur-1);
+    else if(Math.abs(dx)<10){var r=book.getBoundingClientRect();go(e.clientX<r.left+r.width/2&&!single?cur-1:(single&&e.clientX<r.left+r.width*.35?cur-1:cur+1))}
+  });
+  $('fs').onclick=function(){
+    if(document.fullscreenElement)document.exitFullscreen();
+    else if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen();
+  };
+  var rt;addEventListener('resize',function(){
+    clearTimeout(rt);rt=setTimeout(function(){
+      var p=first(cur),was=single;build();
+      if(was!==single){cur=spreadOf(p);paint(cur);ui(cur)}
+    },200);
+  });
+})();
+</script>
+</body>
+</html>

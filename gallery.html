@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gallery · Spyda’s web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gallery.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+<svg class="geo" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" aria-hidden="true">
+  <path d="M0 300L300 0M0 400L400 0M0 500L500 0" opacity=".6"/>
+  <g class="spin"><circle cx="860" cy="140" r="110"/><circle cx="860" cy="140" r="190"/><circle cx="860" cy="140" r="280" stroke-dasharray="2 10"/><path d="M860 -150V430M570 140H1150"/></g>
+  <g class="spin r"><rect x="40" y="740" width="200" height="200" transform="rotate(45 140 840)"/><rect x="80" y="780" width="120" height="120" transform="rotate(45 140 840)"/><rect x="0" y="700" width="280" height="280" stroke-dasharray="2 10" transform="rotate(45 140 840)"/></g>
+</svg>
+
+<header id="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html">Spyda’s web<i class="dot"></i></a>
+    <nav aria-label="Main">
+      <a class="ul" href="index.html">Home</a>
+      <a class="ul on" href="gallery.html">Gallery</a>
+      <a class="ul" href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="top">
+    <h1>All projects</h1>
+    <p class="sub">Open a project to flip through its drawings, models and renders.</p>
+  </div>
+  <ul class="shelf" id="shelf"></ul>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Spyda’s web</span><a class="ul" href="index.html">Back to home</a></div></footer>
+
+<script src="gallery.js"></script>
+<script>
+var shelf=document.getElementById('shelf');
+PROJECTS.forEach(function(p,i){
+  var li=document.createElement('li'), a=document.createElement('a');
+  a.className='card'; a.href='reader.html?p='+p.id; a.style.setProperty('--i',i);
+  a.innerHTML='<div class="cover"></div><div class="meta"><span>'+p.title+'</span><small>'+p.pages.length+' pages</small></div><span class="tag">'+p.tag+'</span>';
+  a.querySelector('.cover').appendChild(pageEl(p,0));
+  li.appendChild(a); shelf.appendChild(li);
+});
+var cards=document.querySelectorAll('.card');
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+  cards.forEach(function(c){io.observe(c)});
+}else{cards.forEach(function(c){c.classList.add('in')})}
+
+
+const header = document.getElementById('site-header');
+
+const onScroll = () => {
+  header.classList.toggle('scrolled', window.scrollY > 20);
+};
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll(); // run once in case the page loads already scrolled
+
+</script>
+</body>
+</html>

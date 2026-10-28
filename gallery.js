@@ -32,15 +32,16 @@ window.pageEl = function(proj, i) {
   var p = proj.pages[i];
 
   // 1. If page has an image source
-  if (p.src) {
-    d.innerHTML = '<img src="' + p.src + '" alt="' + p.t + '" draggable="false">';
-    return d;
-  }
+if(p.src){
+  d.innerHTML='<img src="'+p.src+'" alt="'+p.t+'" draggable="false"><button class="zoom" type="button" aria-label="View '+p.t+' fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>';
+  d.querySelector('.zoom').onclick=function(e){e.stopPropagation();openZoom(p.src,p.t)};
+  return d;
+}
 
   // 2. Cover Page
   if (i === 0) {
     d.innerHTML = '<svg viewBox="0 0 300 400" fill="none" stroke="#090a0a" stroke-width="1" opacity=".45"><circle cx="230" cy="110" r="50"/><circle cx="230" cy="110" r="80" stroke-dasharray="2 8"/><path d="M230 0V220M120 110H300M0 330L120 210M0 370L160 210"/></svg>' +
-      '<div class="pc"><span>' + proj.tag + '</span><b>' + proj.title + '</b><i class="dot"></i></div>';
+      '<div class="pc"><b>' + proj.title + '</b><i class="dot"></i></div>';
     return d;
   }
 
@@ -65,7 +66,7 @@ window.pageEl = function(proj, i) {
       '<svg viewBox="0 0 300 400" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;" fill="none" stroke="#16191B" stroke-width="1">' +
       '<rect x="18" y="18" width="264" height="364" opacity=".45"/><path d="M18 340H282" opacity=".45"/>' +
       '<text x="30" y="365" font-size="11" fill="#16191B" stroke="none" font-family="Hanken Grotesk,sans-serif">' + p.t + '</text>' +
-      '<text x="270" y="365" font-size="11" fill="#6A7174" stroke="none" text-anchor="end" font-family="Hanken Grotesk,sans-serif">A-0' + i + '</text></svg>';
+      '<text x="270" y="365" font-size="11" fill="#6b746a" stroke="none" text-anchor="end" font-family="Hanken Grotesk,sans-serif">A-0' + i + '</text></svg>';
     return d;
   }
   var bays=2+(i%4),s='';
@@ -75,11 +76,35 @@ window.pageEl = function(proj, i) {
     '<rect x="60" y="130" width="180" height="140"/>'+s+'<path d="M40 270H260"/>'+
     '<path d="M60 108H240M60 103V113M240 103V113" opacity=".5"/>'+
     '<text x="30" y="365" font-size="11" fill="#16191B" stroke="none" font-family="Hanken Grotesk,sans-serif">'+p.t+'</text>'+
-    '<text x="270" y="365" font-size="11" fill="#6A7174" stroke="none" text-anchor="end" font-family="Hanken Grotesk,sans-serif">A-0'+i+'</text></svg>';
+    '<text x="270" y="365" font-size="11" fill="#746a6a" stroke="none" text-anchor="end" font-family="Hanken Grotesk,sans-serif">A-0'+i+'</text></svg>';
   return d;
 };
 
-
+window.openZoom=function(src,title){
+  var o=document.createElement('div');o.className='lb';
+  o.innerHTML='<div class="lb-bar"><span>'+title+'</span><span><button data-a="out" aria-label="Zoom out">−</button><button data-a="in" aria-label="Zoom in">+</button><button data-a="x" aria-label="Close">✕</button></span></div><div class="lb-stage"><img src="'+src+'" alt="'+title+'" draggable="false"></div>';
+  document.body.appendChild(o);
+  var img=o.querySelector('img'),st=o.querySelector('.lb-stage'),s=1,x=0,y=0,pts={},d0=1,s0=1;
+  function apply(){if(s<=1){x=0;y=0}img.style.transform='translate('+x+'px,'+y+'px) scale('+s+')'}
+  function zoom(k){s=Math.min(6,Math.max(1,s*k));apply()}
+  function dist(){var k=Object.keys(pts),a=pts[k[0]],b=pts[k[1]];return Math.hypot(a.x-b.x,a.y-b.y)||1}
+  function close(){document.removeEventListener('keydown',key);o.classList.remove('in');setTimeout(function(){o.remove()},300)}
+  function key(e){if(e.key==='Escape')close();else if(e.key==='+'||e.key==='=')zoom(1.4);else if(e.key==='-')zoom(1/1.4)}
+  document.addEventListener('keydown',key);
+  o.addEventListener('click',function(e){var a=e.target.getAttribute&&e.target.getAttribute('data-a');if(a==='x')close();if(a==='in')zoom(1.5);if(a==='out')zoom(1/1.5)});
+  st.addEventListener('wheel',function(e){e.preventDefault();zoom(e.deltaY<0?1.15:1/1.15)},{passive:false});
+  st.addEventListener('dblclick',function(){s=s>1?1:2.5;apply()});
+  st.addEventListener('pointerdown',function(e){st.setPointerCapture(e.pointerId);pts[e.pointerId]={x:e.clientX,y:e.clientY};if(Object.keys(pts).length===2){d0=dist();s0=s}});
+  st.addEventListener('pointermove',function(e){
+    var p=pts[e.pointerId];if(!p)return;
+    if(Object.keys(pts).length===2){pts[e.pointerId]={x:e.clientX,y:e.clientY};s=Math.min(6,Math.max(1,s0*dist()/d0));apply();return}
+    if(s>1){x+=e.clientX-p.x;y+=e.clientY-p.y;apply()}
+    pts[e.pointerId]={x:e.clientX,y:e.clientY};
+  });
+  function up(e){delete pts[e.pointerId]}
+  st.addEventListener('pointerup',up);st.addEventListener('pointercancel',up);
+  requestAnimationFrame(function(){o.classList.add('in')});
+};
 
 // curtain 
  /* Swipe UP on load — reveal the page */

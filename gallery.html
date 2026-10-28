@@ -49,7 +49,7 @@ var shelf=document.getElementById('shelf');
 PROJECTS.forEach(function(p,i){
   var li=document.createElement('li'), a=document.createElement('a');
   a.className='card'; a.href='reader.html?p='+p.id; a.style.setProperty('--i',i);
-  a.innerHTML='<div class="cover"></div><div class="meta"><span>'+p.title+'</span><small>'+p.pages.length+' pages</small></div><span class="tag">'+p.tag+'</span>';
+  a.innerHTML='<div class="cover"></div><div class="meta"><span class="tag">'+p.tag+'</span><small>'+p.pages.length+' pages</small>';
   a.querySelector('.cover').appendChild(pageEl(p,0));
   li.appendChild(a); shelf.appendChild(li);
 });

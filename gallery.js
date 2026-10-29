@@ -1,11 +1,11 @@
 /* Edit this list. For each page, set src to your image path (e.g. 'img/fence-02.jpg').
    Pages with an empty src show a placeholder drawing sheet. First page is the cover. */
 window.PROJECTS=[
-  {id:'fence',title:'Nassuba Gym Complex',tag:'Int Design, Space planning',pages:[
+  {id:'interior',title:'Nassuba Gym Complex',tag:'Int Design, Space planning',pages:[
     {t:'Cover',src:''},{t:'Basement gym plan',src:'./Images/Gymhouse/BFP.jpg'},{t:'Ground Floor Plan',src:'./Images/Gymhouse/GFP.jpg'},{t:'First Floor Plan',src:'./Images/Gymhouse/FFP.jpg'},{t:'Second Floor Plan',src:'./Images/Gymhouse/SFP.jpg'},{t:'Third Floor Plan',src:'./Images/Gymhouse/TFP.jpg'},{t:'Sections',src:''},
     {
         t: '3D Models',
-        src: '',
+        // src: './Images/Gymhouse/BFP.jpg',
         links: [
           { text: 'View 3D site Model', href: 'https://autode.sk/4AOXBOp' },
           { text: 'Basement Gym Interior', href: 'https://autode.sk/3TvBnjI' },
@@ -16,12 +16,20 @@ window.PROJECTS=[
         ]
       }
   ]},
-  {id:'wiring',title:'Building wiring estimate',tag:'Revit MEP, schedules',pages:[
-    {t:'Cover',src:''},{t:'Floor plan',src:''},{t:'Circuit layout',src:''},{t:'Fixture schedule',src:''},{t:'Panel schedule',src:''},{t:'Material take-off',src:''}]},
-  {id:'render',title:'Architectural visualisation',tag:'3D rendering',pages:[
-    {t:'Cover',src:''},{t:'Exterior, day',src:''},{t:'Exterior, dusk',src:''},{t:'Living space',src:''},{t:'Material study',src:''},{t:'Aerial view',src:''},{t:'Details',src:''},{t:'Night view',src:''}]},
-  {id:'families',title:'Custom family library',tag:'Revit families',pages:[
-    {t:'Cover',src:''},{t:'Fence panel',src:''},{t:'Gate',src:''},{t:'Light fixture',src:''},{t:'Socket',src:''},{t:'Type catalog',src:''}]}
+  {id:'authoring',title:'Proposed Duplex - Prj. Chika',tag:'BIM Authoring, Presentation',pages:[
+    {t:'Cover',src:''},{t:'Ground Floor - Dimensions',src:'./Images/Chika/GF_Dimensions.jpg'},{t:'Ground Floor - Room Arrangments',src:'./Images/Chika/GF_RA.jpg'},{t:'First Floor - Dimensions',src:'./Images/Chika/FF_Dimensions.jpg'},{t:'First Floor - Room Arrangments',src:'./Images/Chika/FF_RA.jpg'},{t:'Window Schedule',src:'./Images/Chika/WS.jpg'},{t:'Door Schedule',src:'./Images/Chika/DS.jpg'},
+    {
+        t: '3D Model',
+        src: '',
+        links: [
+          { text: 'View 3D site Model', href: 'https://autode.sk/4yyv5Pt' },
+        ]           
+    }
+  ]},
+  // {id:'render',title:'Architectural visualisation',tag:'3D rendering',pages:[
+  //   {t:'Cover',src:''},{t:'Exterior, day',src:''},{t:'Exterior, dusk',src:''},{t:'Living space',src:''},{t:'Material study',src:''},{t:'Aerial view',src:''},{t:'Details',src:''},{t:'Night view',src:''}]},
+  // {id:'families',title:'Custom family library',tag:'Revit families',pages:[
+  //   {t:'Cover',src:''},{t:'Fence panel',src:''},{t:'Gate',src:''},{t:'Light fixture',src:''},{t:'Socket',src:''},{t:'Type catalog',src:''}]}
 ];
 
 window.pageEl = function(proj, i) {

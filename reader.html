@@ -145,9 +145,10 @@ button{all:unset;box-sizing:border-box;cursor:pointer}
     if(e.key==='ArrowRight')go(cur+1);else if(e.key==='ArrowLeft')go(cur-1);
   });
   var x0=null;
-book.addEventListener('pointerdown',function(e){if(e.target.closest('.zoom'))return;x0=e.clientX});
-  book.addEventListener('pointerup',function(e){
-    if(x0==null)return;
+var skip='a,button,input,select,textarea,summary';
+book.addEventListener('pointerdown',function(e){x0=e.target.closest(skip)?null:e.clientX});  
+book.addEventListener('pointerup',function(e){
+    if(x0==null||e.target.closest(skip)){x0=null;return};
     var dx=e.clientX-x0;x0=null;
     if(dx<-50)go(cur+1);else if(dx>50)go(cur-1);
     else if(Math.abs(dx)<10){var r=book.getBoundingClientRect();go(e.clientX<r.left+r.width/2&&!single?cur-1:(single&&e.clientX<r.left+r.width*.35?cur-1:cur+1))}
